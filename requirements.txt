@@ -1,0 +1,9 @@
+Django>=1.8,<1.9
+coverage
+django-test-plus
+django_extensions
+flake8
+isort
+jupyter
+model_mommy
+pyzmq
