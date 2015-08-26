@@ -1,7 +1,5 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
-from django.views.decorators.http import \
-    require_http_methods
 from django.views.generic import View
 
 from .forms import ExampleForm
@@ -20,16 +18,25 @@ class ModelDetail(View):
             {'object': example_obj})
 
 
-@require_http_methods(['GET', 'HEAD', 'POST'])
-def model_create(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = ExampleForm(request.POST)
-        if form.is_valid():
-            new_obj = form.save()
+class ModelCreate(View):
+    context_object_name = 'form'
+    form_class = ExampleForm
+    template_name = 'viewsapp/form.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {self.context_object_name:
+                self.form_class()})
+
+    def post(self, request, *args, **kwargs):
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_obj = bound_form.save()
             return redirect(new_obj)
-    else:
-        form = ExampleForm()
-    return render(
-        request,
-        'viewsapp/form.html',
-        {'form': form})
+        return render(
+            request,
+            self.template_name,
+            {self.context_object_name:
+                bound_form})
