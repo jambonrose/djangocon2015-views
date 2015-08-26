@@ -1,21 +1,13 @@
-from django.shortcuts import (
-    get_object_or_404, redirect, render)
-from django.views.generic import View
+from django.shortcuts import redirect, render
+from django.views.generic import DetailView, View
 
 from .forms import ExampleForm
 from .models import ExampleModel
 
 
-class ModelDetail(View):
-
-    def get(self, request, *args, **kwargs):
-        request_slug = kwargs.get('slug')
-        example_obj = get_object_or_404(
-            ExampleModel, slug=request_slug)
-        return render(
-            request,
-            'viewsapp/detail.html',
-            {'object': example_obj})
+class ModelDetail(DetailView):
+    model = ExampleModel
+    template_name = 'viewsapp/detail.html'
 
 
 class ModelCreate(View):
