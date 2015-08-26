@@ -1,12 +1,12 @@
 from django.shortcuts import (
     get_object_or_404, render)
 from django.views.decorators.http import \
-    require_http_methods
+    require_safe
 
 from .models import ExampleModel
 
 
-@require_http_methods(['GET', 'HEAD'])
+@require_safe
 def model_detail(request, *args, **kwargs):
     request_slug = kwargs.get('slug')
     example_obj = get_object_or_404(
