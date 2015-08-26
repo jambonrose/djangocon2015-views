@@ -21,3 +21,25 @@ class ViewTests(TestCase):
             slug=example_obj.slug,
             data={})
         self.assertEqual(response.status_code, 405)
+
+    def test_model_create_get(self):
+        self.get_check_200('model_create')
+        self.assertInContext('form')
+
+    def test_model_create_put(self):
+        self.get_check_200('model_create')
+        self.assertInContext('form')
+
+    def test_model_create_post(self):
+        self.post(
+            'model_create',
+            follow=True,
+            data={
+                'name': 'djangocon',
+                'slug': 'djangocon',
+            })
+        self.assertRedirects(
+            self.last_response,
+            self.reverse(
+                'model_detail',
+                slug='djangocon'))

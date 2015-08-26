@@ -1,8 +1,9 @@
 from django.shortcuts import (
-    get_object_or_404, render)
+    get_object_or_404, redirect, render)
 from django.views.decorators.http import \
     require_safe
 
+from .forms import ExampleForm
 from .models import ExampleModel
 
 
@@ -15,3 +16,17 @@ def model_detail(request, *args, **kwargs):
         request,
         'viewsapp/detail.html',
         {'object': example_obj})
+
+
+def model_create(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            new_obj = form.save()
+            return redirect(new_obj)
+    else:
+        form = ExampleForm()
+    return render(
+        request,
+        'viewsapp/form.html',
+        {'form': form})
