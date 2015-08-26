@@ -27,8 +27,14 @@ class ViewTests(TestCase):
         self.assertInContext('form')
 
     def test_model_create_put(self):
-        self.get_check_200('model_create')
-        self.assertInContext('form')
+        response = self.client.put(
+            self.reverse('model_create'),
+            follow=True,
+            data={
+                'name': 'django',
+                'slug': 'django',
+            })
+        self.assertEqual(response.status_code, 405)
 
     def test_model_create_post(self):
         self.post(

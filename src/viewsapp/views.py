@@ -1,7 +1,7 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
-from django.views.decorators.http import \
-    require_safe
+from django.views.decorators.http import (
+    require_http_methods, require_safe)
 
 from .forms import ExampleForm
 from .models import ExampleModel
@@ -18,6 +18,7 @@ def model_detail(request, *args, **kwargs):
         {'object': example_obj})
 
 
+@require_http_methods(['GET', 'HEAD', 'POST'])
 def model_create(request, *args, **kwargs):
     if request.method == 'POST':
         form = ExampleForm(request.POST)
