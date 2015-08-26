@@ -7,6 +7,6 @@ urlpatterns = [
         views.model_create,
         name='model_create'),
     url(r'^(?P<slug>[\w\-]+)/$',
-        views.model_detail,
+        views.ModelDetail.as_view(),
         name='model_detail'),
 ]

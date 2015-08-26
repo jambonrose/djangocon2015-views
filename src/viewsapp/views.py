@@ -1,21 +1,23 @@
 from django.shortcuts import (
     get_object_or_404, redirect, render)
-from django.views.decorators.http import (
-    require_http_methods, require_safe)
+from django.views.decorators.http import \
+    require_http_methods
+from django.views.generic import View
 
 from .forms import ExampleForm
 from .models import ExampleModel
 
 
-@require_safe
-def model_detail(request, *args, **kwargs):
-    request_slug = kwargs.get('slug')
-    example_obj = get_object_or_404(
-        ExampleModel, slug=request_slug)
-    return render(
-        request,
-        'viewsapp/detail.html',
-        {'object': example_obj})
+class ModelDetail(View):
+
+    def get(self, request, *args, **kwargs):
+        request_slug = kwargs.get('slug')
+        example_obj = get_object_or_404(
+            ExampleModel, slug=request_slug)
+        return render(
+            request,
+            'viewsapp/detail.html',
+            {'object': example_obj})
 
 
 @require_http_methods(['GET', 'HEAD', 'POST'])
