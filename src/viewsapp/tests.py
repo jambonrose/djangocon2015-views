@@ -20,6 +20,4 @@ class ViewTests(TestCase):
             'model_detail',
             slug=example_obj.slug,
             data={})
-        self.response_200()
-        self.assertContext('object', example_obj)
-        self.assertTemplateUsed(response, 'viewsapp/detail.html')
+        self.assertEqual(response.status_code, 405)
