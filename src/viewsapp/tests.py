@@ -14,6 +14,18 @@ class ViewTests(TestCase):
         self.assertContext('object', example_obj)
         self.assertTemplateUsed(response, 'viewsapp/detail.html')
 
+    def test_model_detail_head(self):
+        example_obj = mommy.make(ExampleModel)
+        response = self.client.head(
+            self.reverse('model_detail', slug=example_obj.slug))
+        self.assertEqual(response.status_code, 200)
+
+    def test_model_detail_options(self):
+        example_obj = mommy.make(ExampleModel)
+        response = self.client.options(
+            self.reverse('model_detail', slug=example_obj.slug))
+        self.assertEqual(response.status_code, 200)
+
     def test_model_detail_post(self):
         example_obj = mommy.make(ExampleModel)
         response = self.post(
@@ -25,6 +37,16 @@ class ViewTests(TestCase):
     def test_model_create_get(self):
         self.get_check_200('model_create')
         self.assertInContext('form')
+
+    def test_model_create_head(self):
+        response = self.client.head(
+            self.reverse('model_create'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_model_create_options(self):
+        response = self.client.options(
+            self.reverse('model_create'))
+        self.assertEqual(response.status_code, 200)
 
     def test_model_create_put(self):
         response = self.client.put(
