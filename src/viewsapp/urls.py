@@ -4,9 +4,9 @@ from . import views
 
 urlpatterns = [
     url(r'^create/$',
-        views.ModelCreate.as_view(),
+        views.model_create,
         name='model_create'),
     url(r'^(?P<slug>[\w\-]+)/$',
-        views.ModelDetail.as_view(),
+        views.model_detail,
         name='model_detail'),
 ]

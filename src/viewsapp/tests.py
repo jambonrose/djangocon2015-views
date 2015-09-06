@@ -34,7 +34,7 @@ class ViewTests(TestCase):
                 'name': 'django',
                 'slug': 'django',
             })
-        self.response_200(response)
+        self.assertEqual(response.status_code, 405)
 
     def test_model_create_post(self):
         self.post(
