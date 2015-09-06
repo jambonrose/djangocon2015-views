@@ -1,5 +1,6 @@
 Django>=1.8,<1.9
 coverage
+django-decorator-plus
 django-test-plus
 django_extensions
 flake8
